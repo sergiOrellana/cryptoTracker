@@ -36,6 +36,7 @@ public class Main extends Application {
         primaryStage.setTitle("Crypto Tracker By: Sergio Orellana");
         primaryStage.setScene(new Scene(root, 400, 125));
         primaryStage.setResizable(false);
+        primaryStage.setAlwaysOnTop(true);
         primaryStage.show();
         System.out.println("done");
     }
