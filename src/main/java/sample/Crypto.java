@@ -8,6 +8,7 @@ import javafx.application.Platform;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 
 import java.math.BigDecimal;
@@ -18,14 +19,19 @@ public class Crypto extends Pane{
     public Label l2;//Valor Crypto
     public Label l3;//Cambio Crypyo priceChangePercent
 
+    public double preciocrypto;
+
     public Crypto(String name) {
+        preciocrypto = 0.0;
         l1 = new Label();
         l1.setLayoutX(25);l1.setLayoutY(65);
         l2 = new Label();
         l2.setLayoutX(20);l2.setLayoutY(80);
         l2.setFont(Font.font(18));
         l3 = new Label();
-        l3.setLayoutX(25);l3.setLayoutY(105);
+        l3.setLayoutX(25);l3.setLayoutY(110);
+        l3.setFont(Font.font(16));
+
         img = new Pane();
         img.setLayoutX(25);img.setLayoutY(10);
         img.setStyle("-fx-background-image: url(" + name +".png); "+
@@ -40,7 +46,7 @@ public class Crypto extends Pane{
         BigDecimal bd = null;
 
         setLayoutX(0);setLayoutY(0);
-        setPrefWidth(100);setPrefHeight(125);
+        setPrefWidth(100);setPrefHeight(150);
         setStyle("-fx-background-color: lightblue");
         getChildren().addAll(img, l1,l2,l3);
 
@@ -66,7 +72,8 @@ public class Crypto extends Pane{
         {
             while(true)
             {
-                BigDecimal bd;
+                BigDecimal bd = null;
+
                 BinanceApi api = new BinanceApi();
                 String precio = "";
                 long startw = System.currentTimeMillis();
@@ -89,13 +96,15 @@ public class Crypto extends Pane{
                         l3.setTextFill(Color.RED);
                     }
                     bd = api.pricesMap().get(l1.getText());
-                    BigDecimal b2 = new BigDecimal(0);
+
+                    BigDecimal decimal2 = bd;
+
                     if(l1.getText() != "DOGEUSDT")
                     {
                         Platform.runLater(new Runnable() {
                             @Override
                             public void run() {
-                                ponTexto(bd.setScale(2, BigDecimal.ROUND_FLOOR).toString());
+                                ponTexto(decimal2.setScale(2, BigDecimal.ROUND_FLOOR).toString());
                             }
                         });
                     }
@@ -104,7 +113,7 @@ public class Crypto extends Pane{
                         Platform.runLater(new Runnable() {
                             @Override
                             public void run() {
-                                ponTexto(bd.setScale(5, BigDecimal.ROUND_FLOOR).toString());
+                                ponTexto(decimal2.setScale(5, BigDecimal.ROUND_FLOOR).toString());
                             }
                         });
                     }
@@ -113,6 +122,31 @@ public class Crypto extends Pane{
                 {
                     System.out.printf(e.toString());
                 }
+
+                double preciobd;
+                preciobd = bd.doubleValue();
+                if(preciobd > preciocrypto)//Significa que el precio ha subido
+                {
+                    l2.setTextFill(Color.GREEN);
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    l2.setTextFill(Color.BLACK);
+                }
+                else if(preciobd < preciocrypto)//Significa que el precio ha bajado
+                {
+                    l2.setTextFill(Color.RED);
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    l2.setTextFill(Color.BLACK);
+                }
+                preciocrypto = preciobd;
+
                 long rest = System.currentTimeMillis() - startw;
                 System.out.println("El precio de " + l1.getText() + " es " + precio + " y la operación ha tardado " + rest + " milisegundos...");
             }
