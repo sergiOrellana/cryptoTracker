@@ -22,8 +22,8 @@ public class Crypto extends Pane{
         l1 = new Label();
         l1.setLayoutX(25);l1.setLayoutY(65);
         l2 = new Label();
-        l2.setLayoutX(25);l2.setLayoutY(85);
-        l2.setFont(Font.font(14));
+        l2.setLayoutX(20);l2.setLayoutY(80);
+        l2.setFont(Font.font(18));
         l3 = new Label();
         l3.setLayoutX(25);l3.setLayoutY(105);
         img = new Pane();
