@@ -148,7 +148,7 @@ public class Crypto extends Pane{
                 preciocrypto = preciobd;
 
                 long rest = System.currentTimeMillis() - startw;
-                System.out.println("El precio de " + l1.getText() + " es " + precio + " y la operación ha tardado " + rest + " milisegundos...");
+                System.out.println("El precio de " + l1.getText() + " es " + l2.getText() + " y la operación ha tardado " + rest + " milisegundos...");
             }
         }
     }
