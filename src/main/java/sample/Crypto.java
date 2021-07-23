@@ -41,6 +41,9 @@ public class Crypto extends Pane{
         char coin2 = coin[1];
         char coin3 = coin[2];
         String MiCoin = String.valueOf(coin1) + String.valueOf(coin2) + String.valueOf(coin3);
+        if(MiCoin.equals("DOG"))
+            MiCoin = "DOGE";
+        System.out.println("MiCoin =" + MiCoin);
 
         img = new Pane();
         img.setLayoutX(25);img.setLayoutY(10);
@@ -108,9 +111,11 @@ public class Crypto extends Pane{
                     bd = api.pricesMap().get(l1.getText());
 
                     BigDecimal decimal2 = bd;
-
-                    if(getName() != "DOGEUSDT")
+                    double prb = decimal2.doubleValue();
+                    if(prb > 1.0)
                     {
+
+
                         Platform.runLater(new Runnable() {
                             @Override
                             public void run() {
@@ -118,7 +123,7 @@ public class Crypto extends Pane{
                             }
                         });
                     }
-                    else
+                    else if(prb < 1.0)
                     {
                         Platform.runLater(new Runnable() {
                             @Override
