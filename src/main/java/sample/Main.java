@@ -13,11 +13,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToolBar;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import javax.sound.midi.MidiSystem;
+import javax.tools.Tool;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -28,37 +30,37 @@ public class Main extends Application {
     private static String miPar;
     public List<Crypto> cryptos = new ArrayList<>();
     public int X = 0;
+    public int Y = 35;
     public Group roots;
     public Pane pp1;
-    public Pane pp2;
     public Label l2;
     public Stage miStage;
+    public Button Anadir;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         Group root = new Group();
 
-        Pane p1 = new Pane();
-        p1.setPrefHeight(150); p1.setPrefWidth(400);
-        p1.setStyle("-fx-background-color: white");
+        Anadir = new Button("Añadir");
+        ToolBar tb = new ToolBar(Anadir);
 
-        Pane p2 = new Pane();
-        p2.setPrefWidth(100); p2.setPrefHeight(150);
-        p2.setStyle(("-fx-background-image: url(Anadir.png); "+
-                "-fx-background-position: center 20px; " +
-                "-fx-background-color: lightblue; " +
-                "-fx-background-repeat: stretch;" +
-                "-fx-background-size: 50px 50px"));
+        tb.setLayoutX(50);tb.setLayoutY(10);
+        root.getChildren().add(tb);
+
+        BorderPane p1 = new BorderPane();
+
+        p1.setPrefHeight(150); p1.setPrefWidth(450);
+        p1.setStyle("-fx-background-color: white");
+        p1.setTop(tb);
+
+
 
         Label l1 = new Label();
-        l1.setText("Haz clic para\n añadir un nuevo\n par");
+        l1.setText("Clica añadir para añadir un nuevo par");
         l1.setStyle("-fx-text-alignment: center");
-        l1.setLayoutX(5); l1.setLayoutY(85);
+        l1.setLayoutX(130); l1.setLayoutY(120);
 
-        root.getChildren().addAll(p1,p2, l1);
-
-
-
+        root.getChildren().addAll(p1, l1);
 
         primaryStage.setTitle("Crypto Tracker By: Sergio Orellana");
         primaryStage.setScene(new Scene(root, 450, 250));
@@ -66,7 +68,7 @@ public class Main extends Application {
         primaryStage.setAlwaysOnTop(true);
         primaryStage.show();
 
-        p2.setOnMouseClicked(event ->
+        Anadir.setOnMouseClicked(event ->
         {
             try
             {
@@ -87,10 +89,10 @@ public class Main extends Application {
             }
             roots = root;
             pp1 = p1;
-            pp2 = p2;
             l2 = l1;
             MiThread mi = new MiThread("Hilo");
             mi.start();
+
 
         });
         /*
@@ -132,19 +134,55 @@ public class Main extends Application {
                         public void run() {
                             miStage.hide();
                             roots.getChildren().remove(l2);
-                            roots.getChildren().remove(pp2);
                             roots.getChildren().remove(pp1);
-                            ToolBar tb = new ToolBar();
-                            Button prb = new Button("Click me");
-                            tb.getItems().add(prb);
-                            roots.getChildren().addAll(tb, prb);
+                            BorderPane bp = new BorderPane();
+                            bp.setPrefWidth(450);
+
+                            ToolBar tb = new ToolBar(Anadir);
+                            tb.setPrefWidth(450);
+                            bp.setTop(tb);
+
+                            /*Anadir.setOnMouseClicked(event ->
+                            {
+                                try
+                                {
+                                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/seleccion.fxml"));
+                                    Parent root2 = loader.load();
+                                    seleccionController cont = new seleccionController();cont.initialize();
+                                    Scene s = new Scene(root2);
+                                    Stage newS = new Stage();
+                                    newS.setScene(s);
+                                    newS.setResizable(false);
+                                    newS.setAlwaysOnTop(true);
+                                    newS.show();
+                                    miStage = newS;
+                                }
+                                catch(IOException e)
+                                {
+                                    System.out.println(e.toString());
+                                }
+
+                                MiThread mi = new MiThread("Hilo");
+                                mi.start();
+                                if(miPar != null)
+                                {
+                                    Crypto c2 = new Crypto(miPar);
+                                    c2.setLayoutX(X);X+=102;c2.setLayoutY(Y);
+                                    roots.getChildren().add(c2);cryptos.add(c2);
+                                    miPar = null;
+                                }
+
+                            });*/
+
                             Crypto c = new Crypto(miPar);
-                            c.setLayoutX(X);X+=102;
-                            roots.getChildren().add(c);
+                            c.setLayoutX(X);X+=102;c.setLayoutY(Y);
+                            roots.getChildren().addAll(c, bp, tb, Anadir);
                             cryptos.add(c);
+                            miPar = null;
 
                         }
                     });
+
                     break;
                 }
             }
