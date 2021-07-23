@@ -58,7 +58,7 @@ public class Crypto extends Pane{
             System.out.println(e.toString());
         }
 
-        MiThread mt = new MiThread(l1.getText());
+        MiThread mt = new MiThread(name);
         mt.start();
         System.out.println("Para la moneda: " + l1.getText() + " se ha creado el thread " + mt.getId());
     }
@@ -99,7 +99,7 @@ public class Crypto extends Pane{
 
                     BigDecimal decimal2 = bd;
 
-                    if(l1.getText() != "DOGEUSDT")
+                    if(getName() != "DOGEUSDT")
                     {
                         Platform.runLater(new Runnable() {
                             @Override
