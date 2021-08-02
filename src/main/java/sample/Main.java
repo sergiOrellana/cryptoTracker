@@ -1,9 +1,4 @@
 package sample;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.webcerebrium.binance.api.BinanceApi;
-import com.webcerebrium.binance.api.BinanceApiException;
-import com.webcerebrium.binance.datatype.BinanceSymbol;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -15,14 +10,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ToolBar;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-
-import javax.sound.midi.MidiSystem;
-import javax.tools.Tool;
-import java.awt.event.MouseEvent;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -95,21 +84,9 @@ public class Main extends Application {
 
 
         });
-        /*
-        primaryStage.setTitle("Crypto Tracker By: Sergio Orellana");
-
-        primaryStage.setScene(s);
-        primaryStage.setResizable(false);
-        primaryStage.setAlwaysOnTop(true);
-        primaryStage.show();*/
     }
     public static void main(String[] args) {
         launch(args);
-    }
-
-    public void FXML()
-    {
-
     }
 
     public static void done(String par)
@@ -137,43 +114,9 @@ public class Main extends Application {
                             roots.getChildren().remove(pp1);
                             BorderPane bp = new BorderPane();
                             bp.setPrefWidth(450);
-
                             ToolBar tb = new ToolBar(Anadir);
                             tb.setPrefWidth(450);
                             bp.setTop(tb);
-
-                            /*Anadir.setOnMouseClicked(event ->
-                            {
-                                try
-                                {
-                                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/seleccion.fxml"));
-                                    Parent root2 = loader.load();
-                                    seleccionController cont = new seleccionController();cont.initialize();
-                                    Scene s = new Scene(root2);
-                                    Stage newS = new Stage();
-                                    newS.setScene(s);
-                                    newS.setResizable(false);
-                                    newS.setAlwaysOnTop(true);
-                                    newS.show();
-                                    miStage = newS;
-                                }
-                                catch(IOException e)
-                                {
-                                    System.out.println(e.toString());
-                                }
-
-                                MiThread mi = new MiThread("Hilo");
-                                mi.start();
-                                if(miPar != null)
-                                {
-                                    Crypto c2 = new Crypto(miPar);
-                                    c2.setLayoutX(X);X+=102;c2.setLayoutY(Y);
-                                    roots.getChildren().add(c2);cryptos.add(c2);
-                                    miPar = null;
-                                }
-
-                            });*/
-
                             Crypto c = new Crypto(miPar);
                             c.setLayoutX(X);X+=102;c.setLayoutY(Y);
                             roots.getChildren().addAll(c, bp, tb, Anadir);
@@ -182,16 +125,9 @@ public class Main extends Application {
 
                         }
                     });
-
                     break;
                 }
             }
         }
-    }
-
-    public void cerrar()
-    {
-
-
     }
 }

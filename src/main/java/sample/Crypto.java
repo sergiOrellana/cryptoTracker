@@ -8,7 +8,6 @@ import javafx.application.Platform;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 
 import java.math.BigDecimal;
@@ -114,8 +113,6 @@ public class Crypto extends Pane{
                     double prb = decimal2.doubleValue();
                     if(prb > 1.0)
                     {
-
-
                         Platform.runLater(new Runnable() {
                             @Override
                             public void run() {
@@ -139,7 +136,9 @@ public class Crypto extends Pane{
                 }
 
                 double preciobd;
+                assert bd != null: "bd es null";
                 preciobd = bd.doubleValue();
+
                 if(preciobd > preciocrypto)//Significa que el precio ha subido
                 {
                     l2.setTextFill(Color.GREEN);

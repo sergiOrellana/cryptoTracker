@@ -1,15 +1,9 @@
 package sample;
 
-import com.webcerebrium.binance.api.BinanceApi;
-import javafx.application.Application;
 import javafx.fxml.FXML;
-import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +55,7 @@ public class seleccionController{
         l2.add(BTC2);
         l2.add(ETH2);
         l2.add(USDT2);
+
 
     }
 
