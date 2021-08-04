@@ -8,7 +8,6 @@ import javafx.application.Platform;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 
 import java.math.BigDecimal;
@@ -19,9 +18,12 @@ public class Crypto extends Pane{
     public Label l2;//Valor Crypto
     public Label l3;//Cambio Crypyo priceChangePercent
 
+    public String[] coins;
+
     public double preciocrypto;
 
     public Crypto(String name) {
+        coins = new String[]{"ADA", "BCH", "BNB", "BTC", "DOG", "ETC", "ETH", "LTC", "XRP"};
         preciocrypto = 0.0;
         l1 = new Label();
         l1.setLayoutX(25);l1.setLayoutY(65);
@@ -32,9 +34,19 @@ public class Crypto extends Pane{
         l3.setLayoutX(25);l3.setLayoutY(110);
         l3.setFont(Font.font(16));
 
+
+        char[] coin = name.toCharArray();
+        char coin1 = coin[0];
+        char coin2 = coin[1];
+        char coin3 = coin[2];
+        String MiCoin = String.valueOf(coin1) + String.valueOf(coin2) + String.valueOf(coin3);
+        if(MiCoin.equals("DOG"))
+            MiCoin = "DOGE";
+        System.out.println("MiCoin =" + MiCoin);
+
         img = new Pane();
         img.setLayoutX(25);img.setLayoutY(10);
-        img.setStyle("-fx-background-image: url(" + name +".png); "+
+        img.setStyle("-fx-background-image: url(" + MiCoin +".png); "+
                 "-fx-background-position: center center; " +
                 "-fx-background-repeat: stretch;" +
                 "-fx-background-size: 50px 50px"
@@ -58,7 +70,7 @@ public class Crypto extends Pane{
             System.out.println(e.toString());
         }
 
-        MiThread mt = new MiThread(l1.getText());
+        MiThread mt = new MiThread(name);
         mt.start();
         System.out.println("Para la moneda: " + l1.getText() + " se ha creado el thread " + mt.getId());
     }
@@ -98,8 +110,8 @@ public class Crypto extends Pane{
                     bd = api.pricesMap().get(l1.getText());
 
                     BigDecimal decimal2 = bd;
-
-                    if(l1.getText() != "DOGEUSDT")
+                    double prb = decimal2.doubleValue();
+                    if(prb > 1.0)
                     {
                         Platform.runLater(new Runnable() {
                             @Override
@@ -108,7 +120,7 @@ public class Crypto extends Pane{
                             }
                         });
                     }
-                    else
+                    else if(prb < 1.0)
                     {
                         Platform.runLater(new Runnable() {
                             @Override
@@ -124,7 +136,9 @@ public class Crypto extends Pane{
                 }
 
                 double preciobd;
+                assert bd != null: "bd es null";
                 preciobd = bd.doubleValue();
+
                 if(preciobd > preciocrypto)//Significa que el precio ha subido
                 {
                     l2.setTextFill(Color.GREEN);
@@ -148,7 +162,7 @@ public class Crypto extends Pane{
                 preciocrypto = preciobd;
 
                 long rest = System.currentTimeMillis() - startw;
-                System.out.println("El precio de " + l1.getText() + " es " + precio + " y la operación ha tardado " + rest + " milisegundos...");
+                System.out.println("El precio de " + l1.getText() + " es " + l2.getText() + " y la operación ha tardado " + rest + " milisegundos...");
             }
         }
     }
